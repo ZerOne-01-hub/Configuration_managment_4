@@ -1,0 +1,279 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> statements
+Rule 2     statements -> statements statement
+Rule 3     statements -> statement
+Rule 4     statement -> IDENT IS value
+Rule 5     value -> atom
+Rule 6     value -> array
+Rule 7     atom -> NUMBER
+Rule 8     atom -> STRING
+Rule 9     atom -> QMARK_LBRACK IDENT RBRACK
+Rule 10    array -> LPAREN RPAREN
+Rule 11    array -> LPAREN array_elements RPAREN
+Rule 12    array_elements -> value
+Rule 13    array_elements -> array_elements COMMA value
+
+Terminals, with rules where they appear
+
+COMMA                : 13
+IDENT                : 4 9
+IS                   : 4
+LPAREN               : 10 11
+NUMBER               : 7
+QMARK_LBRACK         : 9
+RBRACK               : 9
+RPAREN               : 10 11
+STRING               : 8
+error                : 
+
+Nonterminals, with rules where they appear
+
+array                : 6
+array_elements       : 11 13
+atom                 : 5
+program              : 0
+statement            : 2 3
+statements           : 1 2
+value                : 4 12 13
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . statements
+    (2) statements -> . statements statement
+    (3) statements -> . statement
+    (4) statement -> . IDENT IS value
+
+    IDENT           shift and go to state 4
+
+    program                        shift and go to state 1
+    statements                     shift and go to state 2
+    statement                      shift and go to state 3
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> statements .
+    (2) statements -> statements . statement
+    (4) statement -> . IDENT IS value
+
+    $end            reduce using rule 1 (program -> statements .)
+    IDENT           shift and go to state 4
+
+    statement                      shift and go to state 5
+
+state 3
+
+    (3) statements -> statement .
+
+    IDENT           reduce using rule 3 (statements -> statement .)
+    $end            reduce using rule 3 (statements -> statement .)
+
+
+state 4
+
+    (4) statement -> IDENT . IS value
+
+    IS              shift and go to state 6
+
+
+state 5
+
+    (2) statements -> statements statement .
+
+    IDENT           reduce using rule 2 (statements -> statements statement .)
+    $end            reduce using rule 2 (statements -> statements statement .)
+
+
+state 6
+
+    (4) statement -> IDENT IS . value
+    (5) value -> . atom
+    (6) value -> . array
+    (7) atom -> . NUMBER
+    (8) atom -> . STRING
+    (9) atom -> . QMARK_LBRACK IDENT RBRACK
+    (10) array -> . LPAREN RPAREN
+    (11) array -> . LPAREN array_elements RPAREN
+
+    NUMBER          shift and go to state 10
+    STRING          shift and go to state 11
+    QMARK_LBRACK    shift and go to state 12
+    LPAREN          shift and go to state 13
+
+    value                          shift and go to state 7
+    atom                           shift and go to state 8
+    array                          shift and go to state 9
+
+state 7
+
+    (4) statement -> IDENT IS value .
+
+    IDENT           reduce using rule 4 (statement -> IDENT IS value .)
+    $end            reduce using rule 4 (statement -> IDENT IS value .)
+
+
+state 8
+
+    (5) value -> atom .
+
+    IDENT           reduce using rule 5 (value -> atom .)
+    $end            reduce using rule 5 (value -> atom .)
+    RPAREN          reduce using rule 5 (value -> atom .)
+    COMMA           reduce using rule 5 (value -> atom .)
+
+
+state 9
+
+    (6) value -> array .
+
+    IDENT           reduce using rule 6 (value -> array .)
+    $end            reduce using rule 6 (value -> array .)
+    RPAREN          reduce using rule 6 (value -> array .)
+    COMMA           reduce using rule 6 (value -> array .)
+
+
+state 10
+
+    (7) atom -> NUMBER .
+
+    IDENT           reduce using rule 7 (atom -> NUMBER .)
+    $end            reduce using rule 7 (atom -> NUMBER .)
+    RPAREN          reduce using rule 7 (atom -> NUMBER .)
+    COMMA           reduce using rule 7 (atom -> NUMBER .)
+
+
+state 11
+
+    (8) atom -> STRING .
+
+    IDENT           reduce using rule 8 (atom -> STRING .)
+    $end            reduce using rule 8 (atom -> STRING .)
+    RPAREN          reduce using rule 8 (atom -> STRING .)
+    COMMA           reduce using rule 8 (atom -> STRING .)
+
+
+state 12
+
+    (9) atom -> QMARK_LBRACK . IDENT RBRACK
+
+    IDENT           shift and go to state 14
+
+
+state 13
+
+    (10) array -> LPAREN . RPAREN
+    (11) array -> LPAREN . array_elements RPAREN
+    (12) array_elements -> . value
+    (13) array_elements -> . array_elements COMMA value
+    (5) value -> . atom
+    (6) value -> . array
+    (7) atom -> . NUMBER
+    (8) atom -> . STRING
+    (9) atom -> . QMARK_LBRACK IDENT RBRACK
+    (10) array -> . LPAREN RPAREN
+    (11) array -> . LPAREN array_elements RPAREN
+
+    RPAREN          shift and go to state 15
+    NUMBER          shift and go to state 10
+    STRING          shift and go to state 11
+    QMARK_LBRACK    shift and go to state 12
+    LPAREN          shift and go to state 13
+
+    array_elements                 shift and go to state 16
+    value                          shift and go to state 17
+    atom                           shift and go to state 8
+    array                          shift and go to state 9
+
+state 14
+
+    (9) atom -> QMARK_LBRACK IDENT . RBRACK
+
+    RBRACK          shift and go to state 18
+
+
+state 15
+
+    (10) array -> LPAREN RPAREN .
+
+    IDENT           reduce using rule 10 (array -> LPAREN RPAREN .)
+    $end            reduce using rule 10 (array -> LPAREN RPAREN .)
+    RPAREN          reduce using rule 10 (array -> LPAREN RPAREN .)
+    COMMA           reduce using rule 10 (array -> LPAREN RPAREN .)
+
+
+state 16
+
+    (11) array -> LPAREN array_elements . RPAREN
+    (13) array_elements -> array_elements . COMMA value
+
+    RPAREN          shift and go to state 19
+    COMMA           shift and go to state 20
+
+
+state 17
+
+    (12) array_elements -> value .
+
+    RPAREN          reduce using rule 12 (array_elements -> value .)
+    COMMA           reduce using rule 12 (array_elements -> value .)
+
+
+state 18
+
+    (9) atom -> QMARK_LBRACK IDENT RBRACK .
+
+    IDENT           reduce using rule 9 (atom -> QMARK_LBRACK IDENT RBRACK .)
+    $end            reduce using rule 9 (atom -> QMARK_LBRACK IDENT RBRACK .)
+    RPAREN          reduce using rule 9 (atom -> QMARK_LBRACK IDENT RBRACK .)
+    COMMA           reduce using rule 9 (atom -> QMARK_LBRACK IDENT RBRACK .)
+
+
+state 19
+
+    (11) array -> LPAREN array_elements RPAREN .
+
+    IDENT           reduce using rule 11 (array -> LPAREN array_elements RPAREN .)
+    $end            reduce using rule 11 (array -> LPAREN array_elements RPAREN .)
+    RPAREN          reduce using rule 11 (array -> LPAREN array_elements RPAREN .)
+    COMMA           reduce using rule 11 (array -> LPAREN array_elements RPAREN .)
+
+
+state 20
+
+    (13) array_elements -> array_elements COMMA . value
+    (5) value -> . atom
+    (6) value -> . array
+    (7) atom -> . NUMBER
+    (8) atom -> . STRING
+    (9) atom -> . QMARK_LBRACK IDENT RBRACK
+    (10) array -> . LPAREN RPAREN
+    (11) array -> . LPAREN array_elements RPAREN
+
+    NUMBER          shift and go to state 10
+    STRING          shift and go to state 11
+    QMARK_LBRACK    shift and go to state 12
+    LPAREN          shift and go to state 13
+
+    value                          shift and go to state 21
+    atom                           shift and go to state 8
+    array                          shift and go to state 9
+
+state 21
+
+    (13) array_elements -> array_elements COMMA value .
+
+    RPAREN          reduce using rule 13 (array_elements -> array_elements COMMA value .)
+    COMMA           reduce using rule 13 (array_elements -> array_elements COMMA value .)
+
